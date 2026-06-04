@@ -59,7 +59,6 @@ public class VersusFragment extends Fragment {
         ObjectAnimator.ofObject(tvWFTBC1, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorTransparent), ContextCompat.getColor(context, R.color.colorWhite)).setDuration(500).start();
         ObjectAnimator.ofObject(tvWFTBC2, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorTransparent), ContextCompat.getColor(context, R.color.colorWhite)).setDuration(500).start();
 
-
         new Handler().postDelayed(this::StartRandom, 200);
 
 
@@ -128,7 +127,7 @@ public class VersusFragment extends Fragment {
                     finish(2);
                 }
             }
-            return false;
+            return true;
         });
     }
 

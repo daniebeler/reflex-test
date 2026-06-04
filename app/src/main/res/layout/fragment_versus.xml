@@ -10,7 +10,6 @@
         android:id="@+id/idStrich3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignParentStart="true"
         android:background="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,14 +24,12 @@
         app:layout_constraintBottom_toTopOf="@+id/idStrich3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/idWFTBC1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:rotation="180"
             android:text="@string/wait"
             android:textAllCaps="false"
@@ -43,23 +40,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/idScore1"
+        <FrameLayout
+            android:id="@+id/idScore1Container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:layout_weight=".5"
-            android:rotation="180"
-            android:text="@string/zero"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite"
-            android:textSize="36sp"
+            android:fitsSystemWindows="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/idScore1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:rotation="180"
+                android:text="@string/zero"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="36sp" />
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -77,7 +77,6 @@
             android:id="@+id/idWFTBC2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:text="@string/wait"
             android:textAllCaps="false"
             android:textColor="@android:color/background_light"
@@ -87,20 +86,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/idScore2"
+        <FrameLayout
+            android:id="@+id/idScore2Container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            android:text="@string/zero"
-            android:textAllCaps="false"
-            android:textColor="@android:color/background_light"
-            android:textSize="36sp"
+            android:fitsSystemWindows="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/idScore2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/zero"
+                android:textAllCaps="false"
+                android:textColor="@android:color/background_light"
+                android:textSize="36sp" />
+        </FrameLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

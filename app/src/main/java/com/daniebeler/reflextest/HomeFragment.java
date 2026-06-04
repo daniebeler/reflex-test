@@ -73,8 +73,6 @@ public class HomeFragment extends Fragment {
             vStrich1.startAnimation(anim1);
             vStrich2.startAnimation(anim1);
             bFirstTime = true;
-
-
         }
 
         if (spHighscore.getLong("highscore", 100000) == 100000) {

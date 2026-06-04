@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         strActiveFragment = "Home";
     }
 
-    public void loadPlay(){
+    public void loadPlay() {
         if (!bInBackground) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.placeholder, new PlayFragment());
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void loadResult(){
+    public void loadResult() {
         if (!bInBackground) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.placeholder, new ResultFragment());
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void loadHome(){
+    public void loadHome() {
         if (!bInBackground) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.placeholder, new HomeFragment());
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void loadVersus(){
+    public void loadVersus() {
         if (!bInBackground) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.placeholder, new VersusFragment());
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void loadVersusResult(){
+    public void loadVersusResult() {
         if (!bInBackground) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.placeholder, new VersusResultFragment());
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         bInBackground = false;
 
-        if(strActiveFragment.equals("Play")){
+        if (strActiveFragment.equals("Play")) {
             loadHome();
         } else if (strActiveFragment.equals("Versus")) {
             loadHome();
