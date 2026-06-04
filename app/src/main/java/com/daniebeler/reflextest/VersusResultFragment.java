@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -80,14 +79,12 @@ public class VersusResultFragment extends Fragment {
             clRelativeVR2.setBackgroundColor(cRed);
             tvResult1.setText(R.string.winner);
             tvResult2.setText(R.string.looser);
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    ObjectAnimator.ofObject(clRelativeVR1, "backgroundColor", new ArgbEvaluator(), cGreen, cLila).setDuration(1500).start();
-                    ObjectAnimator.ofObject(clRelativeVR2, "backgroundColor", new ArgbEvaluator(), cRed, cLila).setDuration(1500).start();
+            new Handler().postDelayed(() -> {
+                ObjectAnimator.ofObject(clRelativeVR1, "backgroundColor", new ArgbEvaluator(), cGreen, cLila).setDuration(1500).start();
+                ObjectAnimator.ofObject(clRelativeVR2, "backgroundColor", new ArgbEvaluator(), cRed, cLila).setDuration(1500).start();
 
-                    runnable.run();
-                    runnable2.run();
-                }
+                runnable.run();
+                runnable2.run();
             }, 2000);
         }
         else {
@@ -96,71 +93,55 @@ public class VersusResultFragment extends Fragment {
             tvResult2.setText(R.string.winner);
             tvResult1.setText(R.string.looser);
 
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    ObjectAnimator.ofObject(clRelativeVR1, "backgroundColor", new ArgbEvaluator(), cRed, cLila).setDuration(1500).start();
-                    ObjectAnimator.ofObject(clRelativeVR2, "backgroundColor", new ArgbEvaluator(), cGreen, cLila).setDuration(1500).start();
+            new Handler().postDelayed(() -> {
+                ObjectAnimator.ofObject(clRelativeVR1, "backgroundColor", new ArgbEvaluator(), cRed, cLila).setDuration(1500).start();
+                ObjectAnimator.ofObject(clRelativeVR2, "backgroundColor", new ArgbEvaluator(), cGreen, cLila).setDuration(1500).start();
 
-                    runnable3.run();
-                    runnable4.run();
-                }
+                runnable3.run();
+                runnable4.run();
             }, 2000);
         }
 
-        clRelativeVR1.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                if (bZeitAbgelaufen) {
-                    if (!bClicked) {
-                        bClicked = true;
-                        ObjectAnimator.ofObject(clRelativeVR1, "backgroundColor", new ArgbEvaluator(), cLila, cGreen).setDuration(2000).start();
-                        ObjectAnimator.ofObject(clRelativeVR2, "backgroundColor", new ArgbEvaluator(), cLila, cGreen).setDuration(2000).start();
-                        vStrich3.startAnimation(anim1);
-                        vStrich3.setBackgroundColor(cWhite);
-                        tvHighscore.startAnimation(anim1);
-                        tvHighscore.setTextColor(cWhite);
+        clRelativeVR1.setOnTouchListener((view1, event) -> {
+            if (bZeitAbgelaufen) {
+                if (!bClicked) {
+                    bClicked = true;
+                    ObjectAnimator.ofObject(clRelativeVR1, "backgroundColor", new ArgbEvaluator(), cLila, cGreen).setDuration(2000).start();
+                    ObjectAnimator.ofObject(clRelativeVR2, "backgroundColor", new ArgbEvaluator(), cLila, cGreen).setDuration(2000).start();
+                    vStrich3.startAnimation(anim1);
+                    vStrich3.setBackgroundColor(cWhite);
+                    tvHighscore.startAnimation(anim1);
+                    tvHighscore.setTextColor(cWhite);
 
-                        runnable5.run();
-                        runnable6.run();
+                    runnable5.run();
+                    runnable6.run();
 
-                        new Handler().postDelayed(new Runnable() {
-                            public void run() {
-                                if (!bInBackground) {
-                                    ((MainActivity) context).loadHome();
-                                }
-                            }
-
-                        }, 2000);
-                    }
+                    new Handler().postDelayed(() -> {
+                        if (!bInBackground) {
+                            ((MainActivity) context).loadHome();
+                        }
+                    }, 2000);
                 }
-                return false;
             }
-
-
+            return false;
         });
 
-        clRelativeVR2.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                if (bZeitAbgelaufen) {
-                    if (!bClicked) {
-                        bClicked = true;
-                        ObjectAnimator.ofObject(clRelativeVR1, "backgroundColor", new ArgbEvaluator(), cLila, cGreen).setDuration(1000).start();
-                        ObjectAnimator.ofObject(clRelativeVR2, "backgroundColor", new ArgbEvaluator(), cLila, cGreen).setDuration(1000).start();
-                        ObjectAnimator.ofObject(tvResult1, "TextColor", new ArgbEvaluator(), cWhite, cTransparent).setDuration(1000).start();
-                        ObjectAnimator.ofObject(tvResult2, "TextColor", new ArgbEvaluator(), cWhite, cTransparent).setDuration(1000).start();
-                        new Handler().postDelayed(new Runnable() {
-                            public void run() {
-                                if (!bInBackground) {
-                                    ((MainActivity) context).loadVersus();
-                                }
-                            }
-
-                        }, 1000);
-                    }
+        clRelativeVR2.setOnTouchListener((view2, event) -> {
+            if (bZeitAbgelaufen) {
+                if (!bClicked) {
+                    bClicked = true;
+                    ObjectAnimator.ofObject(clRelativeVR1, "backgroundColor", new ArgbEvaluator(), cLila, cGreen).setDuration(1000).start();
+                    ObjectAnimator.ofObject(clRelativeVR2, "backgroundColor", new ArgbEvaluator(), cLila, cGreen).setDuration(1000).start();
+                    ObjectAnimator.ofObject(tvResult1, "TextColor", new ArgbEvaluator(), cWhite, cTransparent).setDuration(1000).start();
+                    ObjectAnimator.ofObject(tvResult2, "TextColor", new ArgbEvaluator(), cWhite, cTransparent).setDuration(1000).start();
+                    new Handler().postDelayed(() -> {
+                        if (!bInBackground) {
+                            ((MainActivity) context).loadVersus();
+                        }
+                    }, 1000);
                 }
-                return false;
             }
+            return false;
         });
     }
 

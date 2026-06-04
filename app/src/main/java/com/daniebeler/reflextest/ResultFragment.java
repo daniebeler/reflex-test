@@ -117,11 +117,7 @@ public class ResultFragment extends Fragment {
                         runnable.run();
                         runnable2.run();
 
-                        new Handler().postDelayed(new Runnable() {
-                            public void run() {
-                                ((MainActivity) context).loadHome();
-                            }
-                        }, 2000);
+                        new Handler().postDelayed(() -> ((MainActivity) context).loadHome(), 2000);
                     }
                     else {
                         //bottom

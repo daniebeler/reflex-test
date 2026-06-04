@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -35,8 +34,7 @@ public class VersusFragment extends Fragment {
     private Context context;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         context = inflater.getContext();
 
@@ -62,106 +60,79 @@ public class VersusFragment extends Fragment {
         ObjectAnimator.ofObject(tvWFTBC2, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorTransparent), ContextCompat.getColor(context, R.color.colorWhite)).setDuration(500).start();
 
 
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                StartRandom();
-            }
-        }, 200);
+        new Handler().postDelayed(this::StartRandom, 200);
 
 
-
-        rlRelativePlay1.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (bCanClick) {
-                    bCanClick = false;
-                    RandomHandler.removeCallbacksAndMessages(null);
-                    if (bRandomTimeIsRunning){
-                        iPunkte1 --;
-                        ObjectAnimator.ofObject(tvWFTBC1, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorTransparent)).setDuration(500).start();
-                        ObjectAnimator.ofObject(tvWFTBC2, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorTransparent)).setDuration(500).start();
-                        ObjectAnimator.ofObject(rlRelativePlay1, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorRed), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1500).start();
-                    }else{
-                        iPunkte1 ++;
-                    }
-
-                    if (iPunkte2 < 3 && iPunkte1 < 3) {
-                        tvScore1.setText(String.valueOf(iPunkte1));
-                        tvScore2.setText(String.valueOf(iPunkte2));
-                        tvWFTBC1.setTextColor(ContextCompat.getColor(context, R.color.colorTransparent));
-                        tvWFTBC2.setTextColor(ContextCompat.getColor(context, R.color.colorTransparent));
-                        if(bUserTimeIsrunning){
-                            ObjectAnimator.ofObject(rlRelativePlay1, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1500).start();
-                            new Handler().postDelayed(new Runnable() {
-                                public void run() {
-                                    ObjectAnimator.ofObject(rlRelativePlay2, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1500).start();
-                                }
-                            }, 1000);
-                        }
-
-                        bRandomTimeIsRunning = false;
-                        bUserTimeIsrunning = false;
-
-                        new Handler().postDelayed(new Runnable() {
-                            public void run() {
-                                greenScreen();
-                            }
-                        }, 3000);
-                    }else {
-                        finish(1);
-                    }
+        rlRelativePlay1.setOnTouchListener((view1, motionEvent) -> {
+            if (bCanClick) {
+                bCanClick = false;
+                RandomHandler.removeCallbacksAndMessages(null);
+                if (bRandomTimeIsRunning) {
+                    iPunkte1--;
+                    ObjectAnimator.ofObject(tvWFTBC1, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorTransparent)).setDuration(500).start();
+                    ObjectAnimator.ofObject(tvWFTBC2, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorTransparent)).setDuration(500).start();
+                    ObjectAnimator.ofObject(rlRelativePlay1, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorRed), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1500).start();
+                } else {
+                    iPunkte1++;
                 }
-                return false;
+
+                if (iPunkte2 < 3 && iPunkte1 < 3) {
+                    tvScore1.setText(String.valueOf(iPunkte1));
+                    tvScore2.setText(String.valueOf(iPunkte2));
+                    tvWFTBC1.setTextColor(ContextCompat.getColor(context, R.color.colorTransparent));
+                    tvWFTBC2.setTextColor(ContextCompat.getColor(context, R.color.colorTransparent));
+                    if (bUserTimeIsrunning) {
+                        ObjectAnimator.ofObject(rlRelativePlay1, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1500).start();
+                        new Handler().postDelayed(() -> ObjectAnimator.ofObject(rlRelativePlay2, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1500).start(), 1000);
+                    }
+
+                    bRandomTimeIsRunning = false;
+                    bUserTimeIsrunning = false;
+
+                    new Handler().postDelayed(this::greenScreen, 3000);
+                } else {
+                    finish(1);
+                }
             }
+            return false;
         });
 
-        rlRelativePlay2.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (bCanClick) {
-                    bCanClick = false;
-                    RandomHandler.removeCallbacksAndMessages(null);
-                    if (bRandomTimeIsRunning){
-                        iPunkte2 --;
-                        ObjectAnimator.ofObject(tvWFTBC2, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorTransparent)).setDuration(500).start();
-                        ObjectAnimator.ofObject(tvWFTBC1, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorTransparent)).setDuration(500).start();
-                        ObjectAnimator.ofObject(rlRelativePlay2, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorRed), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1500).start();
-                    }else{
-                        iPunkte2 ++;
-                    }
-
-                    if (iPunkte2 < 3 && iPunkte1 < 3) {
-                        tvScore1.setText(String.valueOf(iPunkte1));
-                        tvScore2.setText(String.valueOf(iPunkte2));
-                        tvWFTBC1.setTextColor(ContextCompat.getColor(context, R.color.colorTransparent));
-                        tvWFTBC2.setTextColor(ContextCompat.getColor(context, R.color.colorTransparent));
-                        if(bUserTimeIsrunning){
-                            ObjectAnimator.ofObject(rlRelativePlay2, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1500).start();
-                            new Handler().postDelayed(new Runnable() {
-                                public void run() {
-                                    ObjectAnimator.ofObject(rlRelativePlay1, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1500).start();
-                                }
-                            }, 1000);
-                        }
-
-                        bRandomTimeIsRunning = false;
-                        bUserTimeIsrunning = false;
-
-                        new Handler().postDelayed(new Runnable() {
-                            public void run() {
-                                greenScreen();
-                            }
-                        }, 3000);
-                    }else {
-                        finish(2);
-                    }
+        rlRelativePlay2.setOnTouchListener((view2, motionEvent) -> {
+            if (bCanClick) {
+                bCanClick = false;
+                RandomHandler.removeCallbacksAndMessages(null);
+                if (bRandomTimeIsRunning) {
+                    iPunkte2--;
+                    ObjectAnimator.ofObject(tvWFTBC2, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorTransparent)).setDuration(500).start();
+                    ObjectAnimator.ofObject(tvWFTBC1, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorTransparent)).setDuration(500).start();
+                    ObjectAnimator.ofObject(rlRelativePlay2, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorRed), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1500).start();
+                } else {
+                    iPunkte2++;
                 }
-                return false;
+
+                if (iPunkte2 < 3 && iPunkte1 < 3) {
+                    tvScore1.setText(String.valueOf(iPunkte1));
+                    tvScore2.setText(String.valueOf(iPunkte2));
+                    tvWFTBC1.setTextColor(ContextCompat.getColor(context, R.color.colorTransparent));
+                    tvWFTBC2.setTextColor(ContextCompat.getColor(context, R.color.colorTransparent));
+                    if (bUserTimeIsrunning) {
+                        ObjectAnimator.ofObject(rlRelativePlay2, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1500).start();
+                        new Handler().postDelayed(() -> ObjectAnimator.ofObject(rlRelativePlay1, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1500).start(), 1000);
+                    }
+
+                    bRandomTimeIsRunning = false;
+                    bUserTimeIsrunning = false;
+
+                    new Handler().postDelayed(this::greenScreen, 3000);
+                } else {
+                    finish(2);
+                }
             }
+            return false;
         });
     }
 
-    public void blueScreen(){
+    public void blueScreen() {
         rlRelativePlay1.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
         rlRelativePlay2.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
         bRandomTimeIsRunning = false;
@@ -174,15 +145,15 @@ public class VersusFragment extends Fragment {
         tvWFTBC2.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_shake));
     }
 
-    public void greenScreen(){
+    public void greenScreen() {
         rlRelativePlay1.setBackgroundColor(ContextCompat.getColor(context, R.color.colorGreen));
         rlRelativePlay2.setBackgroundColor(ContextCompat.getColor(context, R.color.colorGreen));
         tvWFTBC1.setText(R.string.wait);
         tvWFTBC2.setText(R.string.wait);
         tvWFTBC1.setTextSize(18);
         tvWFTBC2.setTextSize(18);
-        tvWFTBC1.setTextColor( ContextCompat.getColor(context, R.color.colorWhite));
-        tvWFTBC2.setTextColor( ContextCompat.getColor(context, R.color.colorWhite));
+        tvWFTBC1.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+        tvWFTBC2.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
 
         bRandomTimeIsRunning = true;
         bUserTimeIsrunning = false;
@@ -191,7 +162,7 @@ public class VersusFragment extends Fragment {
         ObjectAnimator.ofObject(tvWFTBC2, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorTransparent), ContextCompat.getColor(context, R.color.colorWhite)).setDuration(500).start();
     }
 
-    public void finish(int i){
+    public void finish(int i) {
         bRandomTimeIsRunning = false;
         bUserTimeIsrunning = false;
         spWinner.edit().putInt("winner", i).apply();
@@ -199,31 +170,23 @@ public class VersusFragment extends Fragment {
         tvWFTBC2.setTextColor(ContextCompat.getColor(context, R.color.colorTransparent));
         ObjectAnimator.ofObject(tvScore1, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorTransparent)).setDuration(500).start();
         ObjectAnimator.ofObject(tvScore2, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorTransparent)).setDuration(500).start();
-        if (i == 1){
+        if (i == 1) {
             ObjectAnimator.ofObject(rlRelativePlay1, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1000).start();
             ObjectAnimator.ofObject(rlRelativePlay2, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, R.color.colorRed)).setDuration(1000).start();
-        }else{
+        } else {
             ObjectAnimator.ofObject(rlRelativePlay2, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorWhite), ContextCompat.getColor(context, R.color.colorGreen)).setDuration(1000).start();
             ObjectAnimator.ofObject(rlRelativePlay1, "backgroundColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, R.color.colorRed)).setDuration(1000).start();
         }
 
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                ((MainActivity) context).loadVersusResult();
-            }
-        }, 2000);
+        new Handler().postDelayed(() -> ((MainActivity) context).loadVersusResult(), 2000);
     }
 
-    public void StartRandom(){
+    public void StartRandom() {
         bRandomTimeIsRunning = true;
         bCanClick = true;
         RandomHandler.postDelayed(RandomRunnable, (new Random().nextInt(120 - 20 + 1) + 20) * 100);
     }
 
     final Handler RandomHandler = new Handler();
-    Runnable RandomRunnable = new Runnable() {
-        public void run() {
-            blueScreen();
-        }
-    };
+    Runnable RandomRunnable = this::blueScreen;
 }

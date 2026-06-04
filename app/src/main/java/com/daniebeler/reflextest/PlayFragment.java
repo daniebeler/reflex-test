@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -72,31 +71,26 @@ public class PlayFragment extends Fragment {
 
         ObjectAnimator.ofObject(tvWait, "TextColor", new ArgbEvaluator(), ContextCompat.getColor(context, R.color.colorTransparent), ContextCompat.getColor(context, R.color.colorWhite)).setDuration(500).start();
 
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                rlRelativePlay.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
-                bTimeIsRunning = true;
-                lStart = System.currentTimeMillis();
-                tvWait.setText(R.string.tap);
-                tvWait.setTextSize(50);
-                tvWait.startAnimation(animShake);
-                handlerc.postDelayed(updateTimerThreat, 0);
-            }
+        new Handler().postDelayed(() -> {
+            rlRelativePlay.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            bTimeIsRunning = true;
+            lStart = System.currentTimeMillis();
+            tvWait.setText(R.string.tap);
+            tvWait.setTextSize(50);
+            tvWait.startAnimation(animShake);
+            handlerc.postDelayed(updateTimerThreat, 0);
         }, (new Random().nextInt(100 - 1) + 1) * 100);
 
-        rlRelativePlay.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (!bClicked) {
-                    bClicked = true;
-                    bTimeIsRunning = false;
-                    rlRelativePlay.setBackgroundColor(ContextCompat.getColor(context, R.color.colorWhite));
-                    speScore.putLong("score", lTime).apply();
-                    tvWait.setTextColor(ContextCompat.getColor(context, R.color.colorTransparent));
-                    ((MainActivity) context).loadResult();
-                }
-                return false;
+        rlRelativePlay.setOnTouchListener((view1, motionEvent) -> {
+            if (!bClicked) {
+                bClicked = true;
+                bTimeIsRunning = false;
+                rlRelativePlay.setBackgroundColor(ContextCompat.getColor(context, R.color.colorWhite));
+                speScore.putLong("score", lTime).apply();
+                tvWait.setTextColor(ContextCompat.getColor(context, R.color.colorTransparent));
+                ((MainActivity) context).loadResult();
             }
+            return false;
         });
     }
 }

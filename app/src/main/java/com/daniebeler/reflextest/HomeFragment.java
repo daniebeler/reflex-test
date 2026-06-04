@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -35,8 +34,7 @@ public class HomeFragment extends Fragment {
     private Context context;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         context = inflater.getContext();
         // Inflate the layout for this fragment
@@ -85,45 +83,34 @@ public class HomeFragment extends Fragment {
             tvHighScore.setText(getString(R.string.highscore, spHighscore.getLong("highscore", 0)));
         }
 
-        rlRelativeHome.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                if (event.getY() < rlRelativeHome.getResources().getDisplayMetrics().heightPixels / 2f) {
-                    //top
-                    if (!bClicked) {
-                        bClicked = true;
-                        tvHighScore.startAnimation(anim3);
-                        tvSolo.startAnimation(anim4);
-                        tvVersus.startAnimation(anim6);
-                        vStrich1.startAnimation(anim3);
-                        tvX.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-                        tvX.startAnimation(anim2);
-                        tvY.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-                        tvY.startAnimation(anim5);
-                        new Handler().postDelayed(new Runnable() {
-                            public void run() {
-                                    ((MainActivity) context).loadVersus();
-                            }
-                        }, 2000);
-                    }
-                } else {
-                    //bottom
-                    if (!bClicked) {
-                        bClicked = true;
-                        tvHighScore.startAnimation(anim3);
-                        tvSolo.startAnimation(anim4);
-                        tvVersus.startAnimation(anim6);
-                        vStrich1.startAnimation(anim3);
-                        vStrich2.startAnimation(anim3);
-                        new Handler().postDelayed(new Runnable() {
-                            public void run() {
-                                ((MainActivity) context).loadPlay();
-                            }
-                        }, 2000);
-                    }
+        rlRelativeHome.setOnTouchListener((view1, event) -> {
+            if (event.getY() < rlRelativeHome.getResources().getDisplayMetrics().heightPixels / 2f) {
+                //top
+                if (!bClicked) {
+                    bClicked = true;
+                    tvHighScore.startAnimation(anim3);
+                    tvSolo.startAnimation(anim4);
+                    tvVersus.startAnimation(anim6);
+                    vStrich1.startAnimation(anim3);
+                    tvX.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+                    tvX.startAnimation(anim2);
+                    tvY.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+                    tvY.startAnimation(anim5);
+                    new Handler().postDelayed(() -> ((MainActivity) context).loadVersus(), 2000);
                 }
-                return false;
+            } else {
+                //bottom
+                if (!bClicked) {
+                    bClicked = true;
+                    tvHighScore.startAnimation(anim3);
+                    tvSolo.startAnimation(anim4);
+                    tvVersus.startAnimation(anim6);
+                    vStrich1.startAnimation(anim3);
+                    vStrich2.startAnimation(anim3);
+                    new Handler().postDelayed(() -> ((MainActivity) context).loadPlay(), 2000);
+                }
             }
+            return false;
         });
 
     }
